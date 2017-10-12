@@ -1,0 +1,16 @@
+#!/bin/bash
+
+mv:  ~/Downloads/ideaI*tar.gz ~/programs
+tar -xzvf ideaI*.tar.gz
+newdir="$(ls -td -- */ | head -n 1)"
+newdir="${newdir::-1}"
+echo $newdir
+if [[ $newdir == *"idea-IC"* ]]; then
+	echo "found community edition"
+	sed -i "s|idea-IC-*.*.*/|$newdir/bin/|g" /home/ilya/.local/share/applications/jetbrains-idea-ce.desktop
+else
+	echo "found ultimate edition"
+	sed -i "s|idea-IU-*.*.*/|$newdir/bin/|g" /usr/share/applications/jetbrains-idea.desktop
+fi
+
+rm ideaI*.tar.gz
