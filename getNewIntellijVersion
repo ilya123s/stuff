@@ -1,6 +1,6 @@
 #!/bin/bash
 
-mv:  ~/Downloads/ideaI*tar.gz ~/programs
+mv ~/Downloads/ideaI*tar.gz ~/programs
 tar -xzvf ideaI*.tar.gz
 newdir="$(ls -td -- */ | head -n 1)"
 newdir="${newdir::-1}"
