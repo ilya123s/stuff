@@ -1,16 +1,23 @@
 #!/bin/bash
 
-mv ~/Downloads/ideaI*tar.gz ~/programs
+if [ "$(id -u)" != "0" ]; then
+   echo "This script must be run as root" 1>&2
+   exit 1
+fi
+
+cp ~/Downloads/ideaI*tar.gz ~/programs/
 tar -xzvf ideaI*.tar.gz
 newdir="$(ls -td -- */ | head -n 1)"
 newdir="${newdir::-1}"
 echo $newdir
 if [[ $newdir == *"idea-IC"* ]]; then
-	echo "found community edition"
-	sed -i "s|idea-IC-*.*.*/|$newdir/bin/|g" /home/ilya/.local/share/applications/jetbrains-idea-ce.desktop
+        echo "found community edition"
+        sed -i "s|idea-IC-*.*.*/|$newdir/bin/|g" /home/ilya/.local/share/applications/jetbrains-idea-ce.desktop
+        rm ideaI*.tar.gz
+        rm ~/Downloads/ideaI*tar.gz
 else
-	echo "found ultimate edition"
-	sed -i "s|idea-IU-*.*.*/|$newdir/bin/|g" /usr/share/applications/jetbrains-idea.desktop
+        echo "found ultimate edition"
+        sed -i "s|idea-IU-*.*.*/|$newdir/bin/|g" /usr/share/applications/jetbrains-idea.desktop
+        rm ideaI*.tar.gz
+        rm ~/Downloads/ideaI*tar.gz
 fi
-
-rm ideaI*.tar.gz
